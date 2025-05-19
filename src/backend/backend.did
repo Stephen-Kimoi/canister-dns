@@ -1,0 +1,10 @@
+type Submission = record {
+  record_type : text;
+  domain : text;
+  canister_id : text;
+  timestamp : nat64;
+};
+service : {
+  get_submissions : () -> (vec Submission) query;
+  submit : (text, text, text) -> ();
+}

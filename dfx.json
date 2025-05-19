@@ -1,19 +1,19 @@
 {
   "canisters": {
-    "domains_backend": {
-      "candid": "src/domains_backend/domains_backend.did",
-      "package": "domains_backend",
+    "backend": {
+      "candid": "src/backend/backend.did",
+      "package": "backend",
       "type": "rust"
     },
-    "domains_frontend": {
+    "frontend": {
       "dependencies": [
-        "domains_backend"
+        "backend"
       ],
       "source": [
-        "src/domains_frontend/dist"
+        "src/frontend/dist"
       ],
       "type": "assets",
-      "workspace": "domains_frontend"
+      "workspace": "frontend"
     }
   },
   "defaults": {
