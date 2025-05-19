@@ -110,7 +110,17 @@ function App() {
                   <input id="canister" type="text" value={canisterId} onChange={e => setCanisterId(e.target.value)} placeholder="aaaaa-aa" required style={{ padding: '0.6em', borderRadius: 8, border: '1px solid #ccc', fontSize: '1em' }} disabled={loading} />
                 </div>
                 <label style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '0.5em 0 0.2em 0', fontWeight: 500, fontSize: '0.98em' }}>
-                  <input type="checkbox" checked={showWww} onChange={e => setShowWww(e.target.checked)} disabled={loading} />
+                  <input
+                    type="checkbox"
+                    checked={showWww}
+                    onChange={e => {
+                      setShowWww(e.target.checked);
+                      if (type === 'normal' && submitted) {
+                        setRecords(generateRecords({ domain, canisterId, type, showWww: e.target.checked }));
+                      }
+                    }}
+                    disabled={loading}
+                  />
                   Show with www
                 </label>
               </>
