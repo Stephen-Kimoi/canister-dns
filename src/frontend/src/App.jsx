@@ -16,6 +16,7 @@ function App() {
   const [submitted, setSubmitted] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [copiedStep, setCopiedStep] = useState(null);
 
   async function handleSubmit(event) {
     console.log('handleSubmit');
@@ -69,6 +70,13 @@ function App() {
     navigator.clipboard.writeText(value);
     setCopiedIdx(idx);
     setTimeout(() => setCopiedIdx(null), 1200);
+  }
+
+  // Helper for copy-to-clipboard for steps
+  function handleStepCopy(text, step) {
+    navigator.clipboard.writeText(text);
+    setCopiedStep(step);
+    setTimeout(() => setCopiedStep(null), 1200);
   }
 
   return (
@@ -180,6 +188,82 @@ function App() {
                 ))}
               </tbody>
             </table>
+
+            {/* Registration Steps */}
+            <div style={{ marginTop: '2.5em' }}>
+              <h3 style={{ fontWeight: 700, fontSize: '1.08em', marginBottom: 12 }}>Next Steps: Register your domain with the HTTP gateways</h3>
+              {/* Step 1 */}
+              <div style={{ marginBottom: 18 }}>
+                <b>Step 1:</b> Create a file named <code>ic-domains</code> in your canister under the <code>.well-known</code> directory (inside <code>/public</code>):
+                <div style={{ position: 'relative' }}>
+                  <pre style={{ background: '#23272e', color: '#fff', padding: '1em', borderRadius: 8, marginTop: 8, fontSize: '0.97em', overflowX: 'auto' }}>{`
+project_root/
+└── src/
+    └── frontend/
+        └── public/
+            └── .well-known/
+                └── ic-domains
+`}</pre>
+                  <button onClick={() => handleStepCopy(`project_root/\n└── src/\n    └── frontend/\n        └── public/\n            └── .well-known/\n                └── ic-domains\n`, 1)} style={{ position: 'absolute', top: 10, right: 10, background: '#444', color: '#fff', border: 'none', borderRadius: 6, padding: '0.2em 0.8em', cursor: 'pointer', fontSize: '0.95em' }}>{copiedStep === 1 ? 'Copied!' : 'Copy'}</button>
+                </div>
+              </div>
+              {/* Step 2 */}
+              <div style={{ marginBottom: 18 }}>
+                <b>Step 2:</b> Open the <code>ic-domains</code> file and insert your domain name{type === 'normal' && showWww ? 's' : ''} (one per line):
+                <div style={{ position: 'relative' }}>
+                  <pre style={{ background: '#23272e', color: '#fff', padding: '1em', borderRadius: 8, marginTop: 8, fontSize: '0.97em', overflowX: 'auto' }}>{
+                    type === 'normal'
+                      ? `${domain}${showWww ? `\nwww.${domain}` : ''}`
+                      : `${subLabel}.${mainDomain}`
+                  }</pre>
+                  <button onClick={() => handleStepCopy(type === 'normal' ? `${domain}${showWww ? `\nwww.${domain}` : ''}` : `${subLabel}.${mainDomain}`, 2)} style={{ position: 'absolute', top: 10, right: 10, background: '#444', color: '#fff', border: 'none', borderRadius: 6, padding: '0.2em 0.8em', cursor: 'pointer', fontSize: '0.95em' }}>{copiedStep === 2 ? 'Copied!' : 'Copy'}</button>
+                </div>
+                <span style={{ color: '#888', fontSize: '0.95em' }}>
+                  {type === 'normal' && showWww ? 'Both the root and www domain will be included.' : ''}
+                </span>
+              </div>
+              {/* Step 3 */}
+              <div style={{ marginBottom: 18 }}>
+                <b>Step 3:</b> Ensure the <code>.well-known</code> directory is included in your canister by adding this to your <code>.ic-assets.json5</code> file:
+                <div style={{ position: 'relative' }}>
+                  <pre style={{ background: '#23272e', color: '#fff', padding: '1em', borderRadius: 8, marginTop: 8, fontSize: '0.97em', overflowX: 'auto' }}>{`
+{
+  "include": [
+    "./public/.well-known/**"
+  ]
+}
+`}</pre>
+                  <button onClick={() => handleStepCopy(`{
+  "include": [
+    "./public/.well-known/**"
+  ]
+}
+`, 3)} style={{ position: 'absolute', top: 10, right: 10, background: '#444', color: '#fff', border: 'none', borderRadius: 6, padding: '0.2em 0.8em', cursor: 'pointer', fontSize: '0.95em' }}>{copiedStep === 3 ? 'Copied!' : 'Copy'}</button>
+                </div>
+              </div>
+              {/* Step 4 */}
+              <div style={{ marginBottom: 18 }}>
+                <b>Step 4:</b> Deploy the updated canister.
+              </div>
+              {/* Step 5 */}
+              <div style={{ marginBottom: 0 }}>
+                <b>Step 5:</b> Register the domain with the HTTP gateways by running:
+                <div style={{ position: 'relative' }}>
+                  <pre style={{ background: '#23272e', color: '#fff', padding: '1em', borderRadius: 8, marginTop: 8, fontSize: '0.97em', overflowX: 'auto' }}>{`curl -sL -X POST \
+  -H 'Content-Type: application/json' \
+  https://icp0.io/registrations \
+  --data @- <<EOF
+  {
+    "name": "${type === 'normal' ? domain : `${subLabel}.${mainDomain}`}"
+  }
+EOF`}</pre>
+                  <button onClick={() => handleStepCopy(`curl -sL -X POST \
+  -H 'Content-Type: application/json' \
+  https://icp0.io/registrations \
+  --data @- <<EOF\n  {\n    "name": "${type === 'normal' ? domain : `${subLabel}.${mainDomain}` }"\n  }\nEOF`, 5)} style={{ position: 'absolute', top: 10, right: 10, background: '#444', color: '#fff', border: 'none', borderRadius: 6, padding: '0.2em 0.8em', cursor: 'pointer', fontSize: '0.95em' }}>{copiedStep === 5 ? 'Copied!' : 'Copy'}</button>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
