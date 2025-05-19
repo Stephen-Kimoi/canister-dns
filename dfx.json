@@ -1,0 +1,27 @@
+{
+  "canisters": {
+    "domains_backend": {
+      "candid": "src/domains_backend/domains_backend.did",
+      "package": "domains_backend",
+      "type": "rust"
+    },
+    "domains_frontend": {
+      "dependencies": [
+        "domains_backend"
+      ],
+      "source": [
+        "src/domains_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "domains_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
