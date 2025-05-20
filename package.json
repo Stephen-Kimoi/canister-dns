@@ -1,10 +1,26 @@
 {
-  "name": "domains",
-  "version": "1.0.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=7.0.0"
+  },
+  "name": "infoundr-site",
   "private": true,
   "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "prebuild": "npm run prebuild --workspaces --if-present",
+    "pretest": "npm run prebuild --workspaces --if-present",
+    "setup": "./scripts/setup.sh",
+    "setup-backend": "./scripts/setup-backend.sh",
+    "setup-local": "./scripts/setup-local.sh",
     "start": "cd src/frontend && npm run start",
-    "build": "cd src/frontend && npm run build",
-    "setup": "cd src/frontend && npm run setup"
-  }
+    "test": "npm test --workspaces --if-present",
+    "upgrade": "npx generate-did backend && npx upgrade-canister backend --backend && dfx generate",
+    "deploy:playground": "./scripts/deploy-playground.sh",
+    "dev:local": "npm run setup-local && cd src/frontend && npm run dev",
+    "dev:playground": "./scripts/deploy-playground.sh",
+    "deploy:mainnet": "./scripts/deploy-mainnet.sh"
+  },
+  "workspaces": [
+    "src/frontend"
+  ]
 }
