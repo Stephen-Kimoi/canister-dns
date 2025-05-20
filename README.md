@@ -83,3 +83,7 @@ Add the generated records to your DNS provider
 
 Run the provided curl command to register your subdomain
 ![curl](./images/register2.png)
+
+--- 
+
+Check the official documentation [here](https://internetcomputer.org/docs/building-apps/frontends/custom-domains/using-custom-domains/)
