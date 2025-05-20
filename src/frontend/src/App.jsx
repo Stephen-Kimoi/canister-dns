@@ -1,7 +1,75 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { backend } from 'declarations/backend';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
-function App() {
+// Dashboard component
+function Dashboard() {
+  const [code, setCode] = useState('');
+  const [authed, setAuthed] = useState(false);
+  const [submissions, setSubmissions] = useState([]);
+  const [error, setError] = useState('');
+  const SECRET = 'domains';
+
+  async function handleAuth(e) {
+    e.preventDefault();
+    if (code === SECRET) {
+      setAuthed(true);
+      setError('');
+      const subs = await backend.get_submissions();
+      setSubmissions(subs);
+    } else {
+      setError('Incorrect code');
+    }
+  }
+
+  if (!authed) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#f7f8fa', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <form onSubmit={handleAuth} style={{ background: '#fff', padding: '2em', borderRadius: 12, boxShadow: '0 2px 16px #0001', minWidth: 320 }}>
+          <h2 style={{ textAlign: 'center', marginBottom: 18 }}>Dashboard Login</h2>
+          <input type="password" value={code} onChange={e => setCode(e.target.value)} placeholder="Enter secret code" style={{ width: '100%', padding: '0.7em', borderRadius: 8, border: '1px solid #ccc', fontSize: '1em', marginBottom: 12 }} />
+          <button type="submit" style={{ width: '100%', background: '#4f46e5', color: '#fff', border: 'none', borderRadius: 8, padding: '0.7em', fontWeight: 600, fontSize: '1em', cursor: 'pointer' }}>Login</button>
+          {error && <div style={{ color: 'red', marginTop: 10, textAlign: 'center' }}>{error}</div>}
+        </form>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#f7f8fa', padding: '2em', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <h2 style={{ marginBottom: 24 }}>Submissions Dashboard</h2>
+      <div style={{ background: '#fff', borderRadius: 12, boxShadow: '0 2px 16px #0001', padding: '2em', maxWidth: 900, width: '100%' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.97em' }}>
+          <thead>
+            <tr style={{ background: '#f7f8fa' }}>
+              <th style={{ textAlign: 'left', padding: '0.5em 0.4em' }}>Domain</th>
+              <th style={{ textAlign: 'left', padding: '0.5em 0.4em' }}>Canister ID</th>
+              <th style={{ textAlign: 'left', padding: '0.5em 0.4em' }}>Type</th>
+              <th style={{ textAlign: 'left', padding: '0.5em 0.4em' }}>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            {submissions.length === 0 ? (
+              <tr><td colSpan={4} style={{ textAlign: 'center', padding: 20, color: '#888' }}>No submissions yet.</td></tr>
+            ) : (
+              submissions.map((s, i) => (
+                <tr key={i} style={{ background: i % 2 === 0 ? '#f7f8fa' : '#fff' }}>
+                  <td style={{ padding: '0.4em 0.4em' }}>{s.domain}</td>
+                  <td style={{ padding: '0.4em 0.4em' }}>{s.canister_id}</td>
+                  <td style={{ padding: '0.4em 0.4em' }}>{s.record_type}</td>
+                  <td style={{ padding: '0.4em 0.4em' }}>{new Date(Number(s.timestamp) / 1_000_000).toLocaleString()}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// Main App
+function MainApp() {
   const [type, setType] = useState('normal'); // 'normal' or 'subdomain'
   // Normal domain state
   const [domain, setDomain] = useState('');
@@ -289,4 +357,13 @@ EOF`}</pre>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/*" element={<MainApp />} />
+      </Routes>
+    </Router>
+  );
+}
