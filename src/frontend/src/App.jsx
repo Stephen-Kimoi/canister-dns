@@ -227,17 +227,19 @@ project_root/
                 <b>Step 3:</b> Ensure the <code>.well-known</code> directory is included in your canister by adding this to your <code>.ic-assets.json5</code> file:
                 <div style={{ position: 'relative' }}>
                   <pre style={{ background: '#23272e', color: '#fff', padding: '1em', borderRadius: 8, marginTop: 8, fontSize: '0.97em', overflowX: 'auto' }}>{`
-{
-  "include": [
-    "./public/.well-known/**"
-  ]
-}
+[
+  {
+    "match": ".well-known",
+    "ignore": false
+  }
+]
 `}</pre>
-                  <button onClick={() => handleStepCopy(`{
-  "include": [
-    "./public/.well-known/**"
-  ]
-}
+                  <button onClick={() => handleStepCopy(`[
+  {
+    "match": ".well-known",
+    "ignore": false
+  }
+]
 `, 3)} style={{ position: 'absolute', top: 10, right: 10, background: '#444', color: '#fff', border: 'none', borderRadius: 6, padding: '0.2em 0.8em', cursor: 'pointer', fontSize: '0.95em' }}>{copiedStep === 3 ? 'Copied!' : 'Copy'}</button>
                 </div>
               </div>
