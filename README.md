@@ -1,4 +1,4 @@
-# Custom DNS for Internet Computer
+# Canister DNS
 
 A tool to easily connect your custom domain to your canister URL, supporting both main domains and subdomains.
 
