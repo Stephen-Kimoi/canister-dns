@@ -314,6 +314,14 @@ project_root/
               {/* Step 4 */}
               <div style={{ marginBottom: 18 }}>
                 <b>Step 4:</b> Deploy the updated canister.
+                <div style={{ position: 'relative' }}>
+                  <pre style={{ background: '#23272e', color: '#fff', padding: '1em', borderRadius: 8, marginTop: 8, fontSize: '0.97em', overflowX: 'auto' }}>{`
+dfx deploy --network ic
+`}</pre>
+                  <button onClick={() => handleStepCopy(`
+dfx deploy --network ic
+`, 3)} style={{ position: 'absolute', top: 10, right: 10, background: '#444', color: '#fff', border: 'none', borderRadius: 6, padding: '0.2em 0.8em', cursor: 'pointer', fontSize: '0.95em' }}>{copiedStep === 3 ? 'Copied!' : 'Copy'}</button>
+                </div>
               </div>
               {/* Step 5 */}
               <div style={{ marginBottom: 0 }}>
