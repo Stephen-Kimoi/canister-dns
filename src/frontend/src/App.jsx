@@ -345,6 +345,59 @@ EOF`}</pre>
           </div>
         )}
       </div>
+      {/* Documentation Section */}
+      <div style={{ 
+        background: '#fff', 
+        boxShadow: '0 2px 16px #0001', 
+        borderRadius: 16, 
+        padding: '1.5em', 
+        maxWidth: 1100, 
+        width: '100%', 
+        marginTop: '2em',
+        fontSize: '0.95em',
+        textAlign: 'center'
+      }}>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          gap: '2em',
+          alignItems: 'center',
+          color: '#64748b'
+        }}>
+          <span>Documentation:</span>
+          <a 
+            href="https://github.com/Stephen-Kimoi/canister-dns?tab=readme-ov-file#canister-dns" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{
+              color: '#4f46e5',
+              textDecoration: 'none',
+              fontWeight: 500,
+              transition: 'color 0.2s'
+            }}
+            onMouseOver={(e) => e.target.style.color = '#4338ca'}
+            onMouseOut={(e) => e.target.style.color = '#4f46e5'}
+          >
+            Project Docs
+          </a>
+          <span>•</span>
+          <a 
+            href="https://internetcomputer.org/docs/building-apps/frontends/custom-domains/using-custom-domains/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{
+              color: '#4f46e5',
+              textDecoration: 'none',
+              fontWeight: 500,
+              transition: 'color 0.2s'
+            }}
+            onMouseOver={(e) => e.target.style.color = '#4338ca'}
+            onMouseOut={(e) => e.target.style.color = '#4f46e5'}
+          >
+            DFINITY Docs
+          </a>
+        </div>
+      </div>
       {/* Responsive styles and spinner animation */}
       <style>{`
         @media (max-width: 900px) {

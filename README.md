@@ -4,7 +4,7 @@ A tool to easily connect your custom domain to your canister URL, supporting bot
 
 ## Quick Start
 
-Visit [https://canisterdns.stevekimoi.me/](https://canisterdns.stevekimoi.me/) to get started.
+Visit [canisterdns.stevekimoi.me](https://canisterdns.stevekimoi.me/) to get started.
 
 ## Domain Configuration
 
